@@ -12,18 +12,31 @@
         
         .logo { background:#020100 url(https://putrasumatra.mw.lt/css/themas/images/tmn.gif) repeat-x 50% bottom; color:#b94201; text-align:center; padding:12px; border:1px solid #5c2901; font-weight:bold; font-size:14px; }
         
-        /* NAVIGASI MENU DISPLAY BLOCK */
-        .nav-difan { margin: 5px 0; }
-        .nav-difan a { 
-            display: block; 
-            background: #040404 url(https://putrasumatra.mw.lt/css/themas/images/menu.gif) repeat-x 50% bottom; 
-            color: #fe8f17; 
-            padding: 8px 10px; 
-            border: 1px solid #353535; 
-            margin-bottom: 1px; 
-            font-weight: bold;
-        }
-        .nav-difan a:hover { background: #111; color: #75bf00; }
+    /* NAVIGASI MENU KE SAMPING */
+.nav-difan { 
+    margin: 5px 0; 
+    text-align: center; /* Supaya menu ada di tengah */
+    background: #111; /* Background dasar biar nyambung */
+    padding: 5px;
+    border: 1px solid #333;
+}
+
+.nav-difan a { 
+    display: inline-block; /* INI KUNCINYA: agar bisa berjejer kesamping */
+    background: #040404 url(https://putrasumatra.mw.lt/css/themas/images/menu.gif) repeat-x 50% bottom; 
+    color: #fe8f17; 
+    padding: 5px 10px; 
+    border: 1px solid #353535; 
+    margin: 2px; /* Jarak antar kotak menu */
+    font-weight: bold;
+    font-size: 10px; /* Ukuran agak kecil agar muat banyak kesamping */
+}
+
+.nav-difan a:hover { 
+    background: #111; 
+    color: #75bf00; 
+    border-color: #415f00;
+}
 
         /* KONTEN POSTINGAN (CLASS DIFAN) */
         .difan { background:#040404 url(https://putrasumatra.mw.lt/css/themas/images/menu.gif) repeat-x 50% bottom; border:1px solid #353535; padding:5px; margin:5px 0; overflow:hidden; }
