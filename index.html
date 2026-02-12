@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Blog Pasisi</title>
+    <style>
+        /* BASE STRUKTUR XWAPPER */
+        body { background:#000; color:#ccc; font-family:Tahoma; font-size:11px; margin:0; padding:0; display:flex; justify-content:center; }
+        .xwapper { width:100%; max-width:650px; background:#000; min-height:100vh; border-left:1px solid #333; border-right:1px solid #333; box-sizing:border-box; }
+        a { color:#fe8f17; text-decoration:none; }
+        
+        .logo { background:#020100 url(https://putrasumatra.mw.lt/css/themas/images/tmn.gif) repeat-x 50% bottom; color:#b94201; text-align:center; padding:12px; border:1px solid #5c2901; font-weight:bold; font-size:14px; }
+        
+        /* NAVIGASI MENU DISPLAY BLOCK */
+        .nav-difan { margin: 5px 0; }
+        .nav-difan a { 
+            display: block; 
+            background: #040404 url(https://putrasumatra.mw.lt/css/themas/images/menu.gif) repeat-x 50% bottom; 
+            color: #fe8f17; 
+            padding: 8px 10px; 
+            border: 1px solid #353535; 
+            margin-bottom: 1px; 
+            font-weight: bold;
+        }
+        .nav-difan a:hover { background: #111; color: #75bf00; }
+
+        /* KONTEN POSTINGAN (CLASS DIFAN) */
+        .difan { background:#040404 url(https://putrasumatra.mw.lt/css/themas/images/menu.gif) repeat-x 50% bottom; border:1px solid #353535; padding:5px; margin:5px 0; overflow:hidden; }
+        .tmn { background:#020100 url(https://putrasumatra.mw.lt/css/themas/images/tmn_1.gif) repeat-x 50% bottom; color:#b94201; padding:5px; border:1px solid #5c2901; font-weight:bold; }
+        .list1 { background:#101010; border:1px solid #323232; border-top:none; padding:8px; line-height:1.4; }
+        
+        .post-img { width:100px; height:80px; object-fit:cover; float:left; margin:0 10px 5px 0; border:1px solid #444; background:#222; }
+        .gmenu { display:block; background:#030500 url(https://putrasumatra.mw.lt/css/themas/images/gmenu.gif) repeat-x 50% top; color:#75bf00; padding:6px; border:1px solid #415f00; text-align:center; margin-top:5px; clear:both; font-weight:bold; }
+        
+        /* NAVIGASI ANGKA */
+        .pagenav { background:#111; padding:10px; text-align:center; border:1px solid #333; margin:10px 0; }
+        .pagenav a, .pagenav span { display:inline-block; padding:5px 12px; margin:2px; border:1px solid #444; background:#222; color:#75bf00; cursor:pointer; font-weight:bold; }
+        .pagenav .current { background:#b94201; color:#fff; }
+        
+        .footer { background:#0a0a0a url(https://putrasumatra.mw.lt/css/themas/images/header.gif) repeat-x 50% top; border:1px solid #333; padding:15px; text-align:center; color:#666; }
+    </style>
+</head>
+<body>
+
+<div class="xwapper">
+    <div class="logo">Blog Pasisi</div>
+    
+    <div class="nav-difan">
+        <a href="javascript:void(0)" onclick="pindah(1)">» BERANDA</a>
+        <a href="javascript:void(0)" onclick="ambilPasisi()">» PASISI (HALAMAN)</a>
+        <a href="https://difan96.blogspot.com" target="_blank">» BLOG ASLI</a>
+    </div>
+    
+    <div id="content-area"></div>
+    <div id="nav-area"></div>
+
+    <div class="footer">
+        &copy; 2026 <b>Pasisi Blog</b><br>
+        <i>My Jurnal</i>
+    </div>
+</div>
+
+<script>
+    const blog_url = "https://pasisi.blogspot.com"; 
+    const perPage = 5;
+
+    // FUNGSI AMBIL POSTINGAN (HOME)
+    function ambilPost(n) {
+        document.getElementById('content-area').innerHTML = '<div class="list1">Memuat data gerbang...</div>';
+        const script = document.createElement('script');
+        script.src = `${blog_url}/feeds/posts/default?alt=json-in-script&start-index=${n}&max-results=${perPage}&callback=showPost`;
+        document.body.appendChild(script);
+        script.onload = () => document.body.removeChild(script);
+    }
+
+    function showPost(json) {
+        let html = '';
+        const entries = json.feed.entry;
+        if(entries) {
+            entries.forEach(e => {
+                const judul = e.title.$t;
+                const link = e.link.find(l => l.rel === 'alternate').href;
+                let thumb = e.media$thumbnail ? e.media$thumbnail.url.replace('s72-c', 's200') : 'https://via.placeholder.com/100x80?text=No+Img';
+                let ringkasan = (e.summary ? e.summary.$t : (e.content ? e.content.$t : "")).replace(/<[^>]*>?/gm, '').substring(0, 100);
+
+                html += `<div class="difan">
+                            <div class="tmn"><a href="${link}">${judul}</a></div>
+                            <div class="list1">
+                                <img src="${thumb}" class="post-img">
+                                ${ringkasan}...
+                            </div>
+                            <a href="${link}" class="gmenu">MASUK »</a>
+                         </div>`;
+            });
+            document.getElementById('content-area').innerHTML = html;
+        }
+    }
+
+    // FUNGSI AMBIL PASISI (HALAMAN)
+    function ambilPasisi() {
+        document.getElementById('content-area').innerHTML = '<div class="list1">Memuat halaman pasisi...</div>';
+        document.getElementById('nav-area').innerHTML = ''; // Sembunyikan navigasi angka
+        const script = document.createElement('script');
+        script.src = `${blog_url}/feeds/pages/default?alt=json-in-script&callback=showPasisi`;
+        document.body.appendChild(script);
+        script.onload = () => document.body.removeChild(script);
+    }
+
+    function showPasisi(json) {
+        let html = '<div class="tmn" style="text-align:center">DAFTAR PASISI</div>';
+        const entries = json.feed.entry;
+        if(entries) {
+            html += '<div class="nav-difan">';
+            entries.forEach(e => {
+                const judul = e.title.$t;
+                const link = e.link.find(l => l.rel === 'alternate').href;
+                html += `<a href="${link}">» ${judul.toUpperCase()}</a>`;
+            });
+            html += '</div>';
+            document.getElementById('content-area').innerHTML = html;
+        } else {
+            document.getElementById('content-area').innerHTML = '<div class="list1">Halaman tidak ditemukan.</div>';
+        }
+    }
+
+    // NAVIGASI HALAMAN
+    function bikinNav(aktif) {
+        let navHtml = '<div class="pagenav">';
+        for (let i = 1; i <= 5; i++) {
+            navHtml += (i === aktif) ? `<span class="current">${i}</span>` : `<a onclick="pindah(${i})">${i}</a>`;
+        }
+        navHtml += '</div>';
+        document.getElementById('nav-area').innerHTML = navHtml;
+    }
+
+    function pindah(hal) {
+        const start = ((hal - 1) * perPage) + 1;
+        ambilPost(start);
+        bikinNav(hal);
+        window.scrollTo(0,0);
+    }
+
+    // Jalankan pertama kali
+    pindah(1);
+</script>
+</body>
+</html>
