@@ -12,35 +12,30 @@
         
         .logo { background:#020100 url(https://putrasumatra.mw.lt/css/themas/images/tmn.gif) repeat-x 50% bottom; color:#b94201; text-align:center; padding:12px; border:1px solid #5c2901; font-weight:bold; font-size:14px; }
         
-/* NAVIGASI MENU KE SAMPING - DEMPET & RATA KIRI */
-.nav-utama { 
-    text-align: left; /* Rata kiri */
-    background: #0a0a0a; 
-    padding: 0; /* Hilangkan padding luar */
-    border-bottom: 1px solid #333;
-    font-size: 0; /* Trik agar tidak ada celah antar inline-block */
+/* NAVIGASI MENU KE SAMPING */
+.nav-difan { 
+    margin: 5px 0; 
+    text-align: center; /* Supaya menu ada di tengah */
+    background: #111; /* Background dasar biar nyambung */
+    padding: 5px;
+    border: 1px solid #333;
 }
 
-.nav-utama a { 
-    display: inline-block; 
+.nav-difan a { 
+    display: inline-block; /* INI KUNCINYA: agar bisa berjejer kesamping */
     background: #040404 url(https://putrasumatra.mw.lt/css/themas/images/menu.gif) repeat-x 50% bottom; 
     color: #fe8f17; 
-    padding: 8px 12px; 
+    padding: 5px 10px; 
     border: 1px solid #353535; 
-    margin: 0; /* Hapus semua jarak agar dempet */
+    margin: 2px; /* Jarak antar kotak menu */
     font-weight: bold;
-    font-size: 11px; /* Kembalikan ukuran font */
-    border-right: none; /* Opsional: hilangkan border kanan agar tidak dobel saat dempet */
+    font-size: 10px; /* Ukuran agak kecil agar muat banyak kesamping */
 }
 
-/* Biar menu terakhir tetap punya border kanan */
-.nav-utama a:last-child {
-    border-right: 1px solid #353535;
-}
-
-.nav-utama a:hover { 
+.nav-difan a:hover { 
     background: #111; 
     color: #75bf00; 
+    border-color: #415f00;
 }
 
         /* KONTEN POSTINGAN (CLASS DIFAN) */
